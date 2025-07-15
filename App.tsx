@@ -1,28 +1,43 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import Menu from './views/Menu';
+import DetallePlatillo from './views/DetallePlatillo';
+import FormularioPlatillo from './views/FormularioPlatillo';
+import NuevaOrden from './views/NuevaOrden';
+import ProgresoPedido from './views/ProgresoPedido';
+import ResumenPedido from './views/ResumenPedido';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+import { PedidoProvider } from './components/PedidoContext';
 
+const Stack = createNativeStackNavigator();
+
+export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
-    </View>
+    <PedidoProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Menu"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#FFD700', // Color amarillo
+            },
+            headerTintColor: '#000',
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        >
+          <Stack.Screen name="Menu" component={Menu} />
+          <Stack.Screen name="DetallePlatillo" component={DetallePlatillo} />
+          <Stack.Screen name="FormularioPlatillo" component={FormularioPlatillo} />
+          <Stack.Screen name="NuevaOrden" component={NuevaOrden} />
+          <Stack.Screen name="ProgresoPedido" component={ProgresoPedido} />
+          <Stack.Screen name="ResumenPedido" component={ResumenPedido} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PedidoProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
-export default App;
