@@ -8,6 +8,8 @@ import FormularioPlatillo from './views/FormularioPlatillo';
 import NuevaOrden from './views/NuevaOrden';
 import ProgresoPedido from './views/ProgresoPedido';
 import ResumenPedido from './views/ResumenPedido';
+import EstadoPedido from './views/EstadoPedido'; 
+
 
 import { PedidoProvider } from './components/PedidoContext';
 
@@ -36,6 +38,8 @@ export default function App() {
           <Stack.Screen name="NuevaOrden" component={NuevaOrden} />
           <Stack.Screen name="ProgresoPedido" component={ProgresoPedido} />
           <Stack.Screen name="ResumenPedido" component={ResumenPedido} />
+          <Stack.Screen name="EstadoPedido" component={EstadoPedido} />
+          
         </Stack.Navigator>
       </NavigationContainer>
     </PedidoProvider>

@@ -1,3 +1,4 @@
+// views/Menu.js
 import React, { useEffect, useState, useLayoutEffect, useContext } from 'react';
 import {
   View,
@@ -12,6 +13,7 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { PedidoContext } from '../components/PedidoContext';
+
 
 export default function Menu() {
   const [platillos, setPlatillos] = useState([]);
@@ -28,39 +30,52 @@ export default function Menu() {
       setPlatillos(data);
       setLoading(false);
     });
-
     return unsubscribe;
   }, []);
 
+  // Header con dos botones: Estado Pedido + Ir a Pedido
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ResumenPedido')}
-          style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}
-        >
-          <Text style={{ fontWeight: 'bold', fontSize: 16, color: '#000' }}>
-            Ir a Pedido
-          </Text>
-          {pedido.length > 0 && (
-            <View
-              style={{
-                backgroundColor: 'red',
-                borderRadius: 10,
-                marginLeft: 4,
-                paddingHorizontal: 6,
-                paddingVertical: 1,
-              }}
-            >
-              <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12 }}>
-                {pedido.length}
-              </Text>
-            </View>
-          )}
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
+          {/* NUEVO: botón Estado Pedido */}
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EstadoPedido')} // <-- nombre de la ruta
+            style={{ flexDirection: 'row', alignItems: 'center', marginRight: 12 }}
+          >
+            <Text style={{ fontWeight: 'bold', fontSize: 16, color: '#000' }}>
+              Estado
+            </Text>
+          </TouchableOpacity>
+
+          {/* Botón original Ir a Pedido */}
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ResumenPedido')}
+            style={{ flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Text style={{ fontWeight: 'bold', fontSize: 16, color: '#000' }}>
+              Ir a Pedido
+            </Text>
+            {(pedido?.length ?? 0) > 0 && (
+              <View
+                style={{
+                  backgroundColor: 'red',
+                  borderRadius: 10,
+                  marginLeft: 4,
+                  paddingHorizontal: 6,
+                  paddingVertical: 1,
+                }}
+              >
+                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12 }}>
+                  {pedido.length}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
       ),
     });
-  }, [navigation, pedido]);
+  }, [navigation, pedido?.length]);
 
   const categoriasAgrupadas = platillos.reduce((acc, item) => {
     if (!acc[item.categoria]) acc[item.categoria] = [];
@@ -112,68 +127,20 @@ export default function Menu() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    backgroundColor: '#fff',
-    flex: 1,
-  },
-  descripcionBox: {
-    backgroundColor: '#e3f2fd',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-  },
-  tituloDescripcion: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  descripcion: {
-    color: '#555',
-    marginTop: 4,
-  },
+  container: { padding: 10, backgroundColor: '#fff', flex: 1 },
+  descripcionBox: { backgroundColor: '#e3f2fd', padding: 15, borderRadius: 10, marginBottom: 20 },
+  tituloDescripcion: { fontSize: 18, fontWeight: 'bold' },
+  descripcion: { color: '#555', marginTop: 4 },
   categoria: {
-    backgroundColor: '#000',
-    color: '#fff',
-    padding: 6,
-    paddingLeft: 12,
-    fontWeight: 'bold',
-    borderRadius: 6,
-    marginBottom: 8,
+    backgroundColor: '#000', color: '#fff', padding: 6, paddingLeft: 12,
+    fontWeight: 'bold', borderRadius: 6, marginBottom: 8,
   },
-  card: {
-    flexDirection: 'row',
-    backgroundColor: '#fafafa',
-    padding: 8,
-    borderRadius: 10,
-    marginBottom: 10,
-    elevation: 3,
-  },
-  cardAgotado: {
-    opacity: 0.4,
-  },
-  imagen: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-  },
-  info: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  nombre: {
-    fontWeight: 'bold',
-  },
-  descripcionItem: {
-    fontSize: 13,
-    color: '#666',
-  },
-  precio: {
-    marginTop: 4,
-    fontWeight: 'bold',
-  },
-  cargando: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  card: { flexDirection: 'row', backgroundColor: '#fafafa', padding: 8, borderRadius: 10, marginBottom: 10, elevation: 3 },
+  cardAgotado: { opacity: 0.4 },
+  imagen: { width: 80, height: 80, borderRadius: 10 },
+  info: { flex: 1, marginLeft: 10 },
+  nombre: { fontWeight: 'bold' },
+  descripcionItem: { fontSize: 13, color: '#666' },
+  precio: { marginTop: 4, fontWeight: 'bold' },
+  cargando: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });
