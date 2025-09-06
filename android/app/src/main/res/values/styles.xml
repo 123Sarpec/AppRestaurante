@@ -1,8 +1,17 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Forzar modo claro -->
+        <item name="android:forceDarkAllowed">false</item>
+
+        <!-- Color del texto por defecto -->
+        <item name="android:textColor"> #000000</item>
+
+        <!-- Color de hint (texto de ayuda en inputs) -->
+        <item name="android:textColorHint"> #666666</item>
+
+        <!-- Fondo de los EditText -->
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
     </style>
 

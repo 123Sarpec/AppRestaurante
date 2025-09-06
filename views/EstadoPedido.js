@@ -81,8 +81,8 @@ export default function EstadoPedido() {
           <Text style={styles.nombre}>{o.titulo || 'Pedido'}</Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 4 }}>
             <Text style={{ color: '#6b7280' }}>ID: {o.idOrden}</Text>
-            <Text style={{ fontWeight: '700', color: o.estadoCalc === 'lista' ? '#059669' : '#b45309' }}>
-              {o.estadoCalc === 'lista' ? 'LISTA' : 'EN PROGRESO'}
+            <Text style={{ fontWeight: '700', color: o.estadoCalc === 'lista' ? '#202d8dff' : '#b45309' }}>
+              {o.estadoCalc === 'lista' ? 'La Orden esta lista.' : 'EN PROGRESO'}
             </Text>
           </View>
 

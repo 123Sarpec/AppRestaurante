@@ -33,49 +33,52 @@ export default function Menu() {
     return unsubscribe;
   }, []);
 
-  // Header con dos botones: Estado Pedido + Ir a Pedido
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
-          {/* NUEVO: botón Estado Pedido */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate('EstadoPedido')} // <-- nombre de la ruta
-            style={{ flexDirection: 'row', alignItems: 'center', marginRight: 12 }}
-          >
-            <Text style={{ fontWeight: 'bold', fontSize: 16, color: '#000' }}>
-              Estado
-            </Text>
-          </TouchableOpacity>
+  navigation.setOptions({
+    headerTitle: 'Menu',
+    headerTitleAlign: 'center', // opcional: centra el título
+    // Botón IZQUIERDO: "Estado"
+    headerLeft: () => (
+      <TouchableOpacity
+        onPress={() => navigation.navigate('EstadoPedido')}
+        style={{ paddingHorizontal: 12 }}
+      >
+        <Text style={{ fontWeight: 'bold', fontSize: 16, color: '#000' }}>
+          Estado
+        </Text>
+      </TouchableOpacity>
+    ),
+    // Botón DERECHO: "Ir a Pedido" + badge
+    headerRight: () => (
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ResumenPedido')}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <Text style={{ fontWeight: 'bold', fontSize: 16, color: '#000' }}>
+            Ir a Pedido
+          </Text>
+          {(pedido?.length ?? 0) > 0 && (
+            <View
+              style={{
+                backgroundColor: 'red',
+                borderRadius: 10,
+                marginLeft: 4,
+                paddingHorizontal: 6,
+                paddingVertical: 1,
+              }}
+            >
+              <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12 }}>
+                {pedido.length}
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </View>
+    ),
+  });
+}, [navigation, pedido?.length]);
 
-          {/* Botón original Ir a Pedido */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ResumenPedido')}
-            style={{ flexDirection: 'row', alignItems: 'center' }}
-          >
-            <Text style={{ fontWeight: 'bold', fontSize: 16, color: '#000' }}>
-              Ir a Pedido
-            </Text>
-            {(pedido?.length ?? 0) > 0 && (
-              <View
-                style={{
-                  backgroundColor: 'red',
-                  borderRadius: 10,
-                  marginLeft: 4,
-                  paddingHorizontal: 6,
-                  paddingVertical: 1,
-                }}
-              >
-                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12 }}>
-                  {pedido.length}
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        </View>
-      ),
-    });
-  }, [navigation, pedido?.length]);
 
   const categoriasAgrupadas = platillos.reduce((acc, item) => {
     if (!acc[item.categoria]) acc[item.categoria] = [];

@@ -2,6 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+
+
 import Menu from './views/Menu';
 import DetallePlatillo from './views/DetallePlatillo';
 import FormularioPlatillo from './views/FormularioPlatillo';
@@ -23,7 +25,7 @@ export default function App() {
           initialRouteName="Menu"
           screenOptions={{
             headerStyle: {
-              backgroundColor: '#FFD700', // Color amarillo
+              backgroundColor: '#FFD700', 
             },
             headerTintColor: '#000',
             headerTitleAlign: 'center',
